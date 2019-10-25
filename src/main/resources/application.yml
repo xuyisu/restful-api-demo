@@ -1,0 +1,10 @@
+server:
+  port: 8766
+spring:
+  application:
+    name: restful-api-demo
+swagger:
+  enabled: true
+logging:
+  level:
+    com.yisu: debug

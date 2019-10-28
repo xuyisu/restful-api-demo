@@ -34,4 +34,12 @@ public interface UserService {
      * @Return com.yisu.common.result.FwResult
      */
     FwResult createUser(User user);
+    /**
+     * 跟新用户
+     * @Author xuyisu
+     * @Date 2019/10/28
+     * @Param [user]
+     * @Return com.yisu.common.result.FwResult
+     */
+    FwResult updateUser(User user);
 }

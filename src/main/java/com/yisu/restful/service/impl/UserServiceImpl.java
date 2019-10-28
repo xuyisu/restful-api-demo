@@ -39,4 +39,19 @@ public class UserServiceImpl implements UserService {
         DataMock.getUserAll().add(user);
         return FwResult.ok(user);
     }
+
+    @Override
+    public FwResult updateUser(User user) {
+        List<User> userAll = DataMock.getUserAll();
+        for (User use:userAll) {
+            if(use.getId()==user.getId())
+            {
+                use.setUserName(user.getUserName());
+                use.setSex(user.getSex());
+                use.setPassword(user.getPassword());
+                return FwResult.ok("更新成功");
+            }
+        }
+        return FwResult.failed("更新失败");
+    }
 }

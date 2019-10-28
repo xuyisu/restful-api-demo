@@ -65,8 +65,22 @@ public class UserController {
     @ApiOperation(value = "创建用户")
     @FwValidate
     public FwResult createUser(@Valid @RequestBody User user, BindingResult errors) {
-        System.out.println(errors);
         FwResult userInfo=userService.createUser(user);
+        return userInfo;
+    }
+
+    /**
+     * 更新用户
+     * @Author xuyisu
+     * @Date 2019/10/25
+     * @Param [user]
+     * @Return com.yisu.common.result.FwResult
+     */
+    @PutMapping("/{id:\\d+}")
+    @ApiOperation(value = "更新用户")
+    @FwValidate
+    public FwResult updayteUser(@Valid @RequestBody User user, BindingResult errors) {
+        FwResult userInfo=userService.updateUser(user);
         return userInfo;
     }
 

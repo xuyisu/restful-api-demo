@@ -1,18 +1,18 @@
 package com.yisu.restful.controller;
 
 import cn.hutool.json.JSONUtil;
-import com.fasterxml.jackson.annotation.JsonView;
 import com.yisu.common.result.FwResult;
 import com.yisu.common.validate.aop.FwValidate;
+import com.yisu.restful.data.DataMock;
 import com.yisu.restful.entity.User;
 import com.yisu.restful.service.UserService;
 import io.swagger.annotations.ApiOperation;
-import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -72,7 +72,11 @@ public class UserController {
     @PostMapping
     @ApiOperation(value = "创建用户")
     @FwValidate
-    public FwResult createUser(@Valid @RequestBody User user, BindingResult errors) {
+    public FwResult createUser(@Valid @RequestBody User user,BindingResult bindingResult) {
+        if(bindingResult.hasErrors())
+        {
+            return FwResult.failed();
+        }
         FwResult userInfo=userService.createUser(user);
         return userInfo;
     }
@@ -87,25 +91,26 @@ public class UserController {
     @PutMapping("/{id:\\d+}")
     @ApiOperation(value = "更新用户")
     @FwValidate
-    public FwResult updayteUser(@Valid @RequestBody User user, BindingResult errors) {
+    public FwResult updateUser(@Validated(User.Update.class) @RequestBody User user,BindingResult bindingResult) {
+        if(bindingResult.hasErrors())
+        {
+            return FwResult.failed();
+        }
         FwResult userInfo=userService.updateUser(user);
         return userInfo;
     }
 
     @PostMapping("/page")
     @ApiOperation(value = "用户查询服务")
-    public List<User> query(@RequestBody User user,
+    public FwResult query(@RequestBody User user,
                             @PageableDefault(page = 2, size = 17) Pageable pageable) {
         System.out.println(JSONUtil.toJsonStr(user));
         System.out.println(pageable.getPageSize());
         System.out.println(pageable.getPageNumber());
         System.out.println(pageable.getSort());
 
-        List<User> users = new ArrayList<>();
-        users.add(new User());
-        users.add(new User());
-        users.add(new User());
-        return users;
+
+        return FwResult.ok(DataMock.getUserAll());
     }
 
 

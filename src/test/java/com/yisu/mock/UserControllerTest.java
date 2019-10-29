@@ -119,15 +119,41 @@ public class UserControllerTest {
         System.out.println(result);
     }
 
+    @Test
+    public void whenUpdateUserInfoFail() throws Exception {
+        String content = "{\"userName\":\"tom\",\"password\":\"123456\",\"sex\":\"男\"}";
+        String result = mockMvc.perform(put("/user/1")
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .content(content))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.code").value(FwCommonConstants.FAIL))
+                .andReturn().getResponse().getContentAsString();
+
+        System.out.println(result);
+    }
+
 
     @Test
     public void whenQuerySuccess() throws Exception {
         String content = "{\"userName\":\"tom\",\"password\":\"123456\",\"sex\":\"男\",\"id\":\"1\"}";
         String result = mockMvc.perform(
-                get("/user").param("size", "15")
+                post("/user/page").param("size", "15")
                          .param("page", "3")
                         .contentType(MediaType.APPLICATION_JSON_UTF8).content(content))
-                .andExpect(status().isOk()).andExpect(jsonPath("$.length()").value(3))
+                .andExpect(status().isOk()).andExpect(jsonPath("$.code").value(FwCommonConstants.SUCCESS))
+                .andReturn().getResponse().getContentAsString();
+
+        System.out.println(result);
+    }
+
+    @Test
+    public void whenQueryFail() throws Exception {
+        String content = "{\"userName\":\"tom\",\"password\":\"123456\",\"sex\":\"男\"}";
+        String result = mockMvc.perform(
+                post("/user/page").param("size", "15")
+                        .param("page", "3")
+                        .contentType(MediaType.APPLICATION_JSON_UTF8).content(content))
+                .andExpect(status().isOk())//.andExpect(jsonPath("$.code").value(FwCommonConstants.FAIL))
                 .andReturn().getResponse().getContentAsString();
 
         System.out.println(result);

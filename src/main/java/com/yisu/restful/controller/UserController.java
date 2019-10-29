@@ -91,7 +91,7 @@ public class UserController {
     @PutMapping("/{id:\\d+}")
     @ApiOperation(value = "更新用户")
     @FwValidate
-    public FwResult updateUser(@Validated(User.Update.class) @RequestBody User user,BindingResult bindingResult) {
+    public FwResult updateUser(@PathVariable Long id,@Validated(User.Update.class) @RequestBody User user,BindingResult bindingResult) {
         if(bindingResult.hasErrors())
         {
             return FwResult.failed();

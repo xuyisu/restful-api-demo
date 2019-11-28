@@ -4,7 +4,7 @@ spring:
   application:
     name: restful-api-demo
 swagger:
-  enabled: true
+  enabled: true  #swagger 开关
 logging:
   level:
     com.yisu: debug

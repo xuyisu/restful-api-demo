@@ -16,7 +16,7 @@
         <data-commons.version>2.1.10.RELEASE</data-commons.version>
         <commons-io.version>2.6</commons-io.version>
         <commons-lang.version>2.6</commons-lang.version>
-        <commons-collections.version>3.2.1</commons-collections.version>
+        <commons-collections.version>3.2.2</commons-collections.version>
         <commons-beanutils.version>1.9.4</commons-beanutils.version>
     </properties>
 

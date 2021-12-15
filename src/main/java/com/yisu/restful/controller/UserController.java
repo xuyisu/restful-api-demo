@@ -11,13 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
-import javax.validation.Valid;
-import java.util.ArrayList;
-import java.util.List;
 import org.springframework.data.domain.Pageable;
 
 /**
@@ -72,7 +67,7 @@ public class UserController {
     @PostMapping
     @ApiOperation(value = "创建用户")
     @FwValidate
-    public FwResult createUser(@Valid @RequestBody User user,BindingResult bindingResult) {
+    public FwResult createUser(@Validated @RequestBody User user,BindingResult bindingResult) {
         if(bindingResult.hasErrors())
         {
             return FwResult.failed();
@@ -88,10 +83,10 @@ public class UserController {
      * @Param [user]
      * @Return com.yisu.common.result.FwResult
      */
-    @PutMapping("/{id:\\d+}")
+    @PutMapping("/updateUser")
     @ApiOperation(value = "更新用户")
     @FwValidate
-    public FwResult updateUser(@PathVariable Long id,@Validated(User.Update.class) @RequestBody User user,BindingResult bindingResult) {
+    public FwResult updateUser(@Validated(User.Update.class) @RequestBody User user,BindingResult bindingResult) {
         if(bindingResult.hasErrors())
         {
             return FwResult.failed();

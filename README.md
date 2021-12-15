@@ -138,7 +138,7 @@ public class User implements Serializable  {
      * @Param [user]
      * @Return com.yisu.common.result.FwResult
      */
-    @PutMapping("/{id:\\d+}")
+    @PutMapping("/updateUser")
     @ApiOperation(value = "更新用户")
     @FwValidate
     public FwResult updateUser(@Validated(User.Update.class) @RequestBody User user,BindingResult bindingResult) {
